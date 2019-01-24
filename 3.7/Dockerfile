@@ -1,17 +1,15 @@
-# Blog dev Dockerfile
+FROM alpine:3.8
 
-FROM gliderlabs/alpine
+LABEL maintainer="rgu@osones.io"
 
-MAINTAINER vSense <docker@vsense.fr>
 
-RUN apk-install \
+RUN apk -U add \
     python \
-    git \
     py-pip \
     perl \
     make \
     && rm -rf /var/cache/apk/* \
-    && pip install pelican markdown
+    && pip install pelican==3.7 markdown
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
