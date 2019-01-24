@@ -4,12 +4,12 @@ LABEL maintainer="rgu@osones.io"
 
 
 RUN apk -U add \
-    python3 \
+    python \
     py-pip \
     perl \
     make \
     && rm -rf /var/cache/apk/* \
-    && pip install pelican==4.0.1 markdown
+    && pip install pelican==3.7 markdown
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
