@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-LABEL maintainer="rgu@osones.io"
+LABEL maintainer="romain.guichard@alterway.fr"
 
 
 RUN apk -U add \
