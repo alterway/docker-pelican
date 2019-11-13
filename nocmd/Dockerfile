@@ -9,4 +9,4 @@ RUN apk -U add \
     perl \
     make \
     && rm -rf /var/cache/apk/* \
-    && pip install pelican==4.1 markdown
+    && pip install pelican==4.2 markdown
