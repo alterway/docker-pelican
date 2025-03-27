@@ -5,7 +5,7 @@ on:
     branches:
       - master  # Build sur chaque push sur la branche master
     tags:
-      - '*.*'  # Pousser l'image vers Docker Hub uniquement si un tag de type v<major>.<minor> est poussé
+      - 'v*.*'  # Pousser l'image vers Docker Hub uniquement si un tag de type v<major>.<minor> est poussé
 
 jobs:
 
@@ -16,15 +16,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build the Docker image
+    - name: Set TAG based on Git ref
       run: |
         # Vérification du tag
         if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
           TAG="${GITHUB_REF#refs/tags/}"
+          # Supprimer le préfixe "v" si présent
+          TAG="${TAG//v/}"
         else
           TAG="latest"  # Si pas de tag, utiliser "latest"
         fi
-        docker build . --file Dockerfile --tag alterway/pelican:${TAG}
+        # Définir la variable TAG comme une variable d'environnement pour les étapes suivantes
+        echo "TAG=${TAG}" >> $GITHUB_ENV
+
+    - name: Build the Docker image
+      run: |
+        docker build . --file Dockerfile --tag alterway/pelican:${{ env.TAG }}
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
@@ -34,4 +41,4 @@ jobs:
 
     - name: Push the Docker image to Docker Hub
       if: startsWith(github.ref, 'refs/tags/')  # Ne pousse l'image que si un tag est poussé
-      run: docker push alterway/pelican:${TAG}
+      run: docker push alterway/pelican:${{ env.TAG }}
