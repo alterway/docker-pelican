@@ -4,14 +4,20 @@ LABEL maintainer="herve.leclerc@alterway.fr"
 
 
 RUN apk -U add \
-    docker     \
-    python3    \
-    py-pip     \
-    perl       \
-    vim        \
-    make       \
+    docker      \
+    python3     \
+    py-pip      \
+    perl        \
+    vim         \
+    make        \
+    rust        \
+    cargo       \
+    gcc         \
+    pkgconfig   \
+    openssl     \
+    openssl-dev \
     && rm -rf /var/cache/apk/* \
-    && python3 -m pip install "pelican[markdown]" pygments typogrify pelican-syntax-highlighting code2html pelican-search
+    && python3 -m pip install "pelican[markdown]" rtoml pygments typogrify pelican-syntax-highlighting code2html pelican-search
     #&& python3 -m pip install pelican markdown MarkupSafe pelican-syntax-highlighting==0.4.2
 
 COPY start.sh /start.sh
