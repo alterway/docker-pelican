@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.15
 
 LABEL maintainer="herve.leclerc@alterway.fr"
 
@@ -8,9 +8,11 @@ RUN apk -U add \
     python3    \
     py-pip     \
     perl       \
+    vim        \
     make       \
     && rm -rf /var/cache/apk/* \
-    && pip install pelican==4.2 markdown
+    && python3 -m pip install "pelican[markdown]" pygments typogrify pelican-syntax-highlighting code2html pelican-search
+    #&& python3 -m pip install pelican markdown MarkupSafe pelican-syntax-highlighting==0.4.2
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
