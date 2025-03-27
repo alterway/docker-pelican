@@ -16,6 +16,7 @@ RUN apk -U add --no-cache \
         openssl \
         openssl-dev \
         libffi-dev \
+        tzdata \
     && rm -rf /var/cache/apk/* \
     && python3 -m pip install --upgrade pip
 
